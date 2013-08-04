@@ -1,0 +1,4 @@
+%\VignetteIndexEntry{Using LPmerge}
+\documentclass{article}
+\begin{document}
+\end{document}
