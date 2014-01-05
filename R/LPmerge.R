@@ -209,7 +209,7 @@ function(Maps,max.interval=1:3,weights=NULL) {
 
 		n.error.terms <- nrow(error.terms)
 			
-		print("Generating composite map.")
+		print("Generating consensus map.")
 		N <- n.bin + n.error.terms
 		G <- cBind(A,Matrix(0,nrow=nrow(A),ncol=n.error.terms,sparse=TRUE))
 	
@@ -240,7 +240,7 @@ function(Maps,max.interval=1:3,weights=NULL) {
 		row.names(composite.map) <- NULL
 
         print(paste("Max.Interval = ",max.interval[p],sep=""))
-		print(paste("Composite map length:",max(composite.map$position)))
+		print(paste("Consensus map length:",max(composite.map$position)))
 
 		link.maps <- numeric(0)
 		for (k in 1:n.maps) {
@@ -251,7 +251,7 @@ function(Maps,max.interval=1:3,weights=NULL) {
 		RMSE <- apply(link.maps,2,function(x){sqrt(mean((composite.map$position-x)^2,na.rm=TRUE))})
 		print(data.frame(map=c(map.names,"mean","sd"),RMSE=round(c(RMSE,mean(RMSE),sd(RMSE)),2)))
 		colnames(link.maps) <- map.names
-		result[[p]] <- data.frame(marker=composite.map$marker,composite=composite.map$position,link.maps)
+		result[[p]] <- data.frame(marker=composite.map$marker,consensus=composite.map$position,link.maps)
 		}
 	}
 	return(result)

@@ -1,8 +1,5 @@
-5c051e1f4b9587aa411ec372d4225fb2 *DESCRIPTION
+f4a07d8d22a78a7531005e20e93f38c5 *DESCRIPTION
 231f6d857e282de9addace464a14067b *NAMESPACE
-fa02a02d8f554aea096c2b1d1cf0f8de *R/LPmerge.R
+9442fb53d968b551613de16616b9fcaa *R/LPmerge.R
 7ef52096f293fd0b24445cf8cecada56 *inst/CITATION
-0606e22d96141bae599f753b26a49e79 *inst/doc/LPmerge.R
-f9f3e13505627dca823795fa3ef4acad *inst/doc/LPmerge.Rnw
-bbcb2ab6b48e1275ce19176460d7529e *inst/doc/LPmerge.pdf
-cb84a4c2f1e357393144df4c99c2b300 *man/LPmerge.Rd
+3bd176dae11dc30d0da3c7fb258fce06 *man/LPmerge.Rd
