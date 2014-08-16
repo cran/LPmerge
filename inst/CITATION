@@ -3,7 +3,9 @@ citHeader("To cite the LPmerge package in publications use:")
 citEntry(entry="Article",
 	title="LPmerge: an R package for merging genetic maps by linear programming",
 	author=personList(as.person("J. B. Endelman"),as.person("C. Plomion")),
-	year=2013,
-         journal="Submitted",
-        textVersion="Endelman,J.B. and C. Plomion (submitted) LPmerge: an R package for merging genetic maps by linear programming."
+	year=2014,
+	journal="Bioinformatics",
+    volume=30,
+    pages="1623-1624",	
+    textVersion="Endelman, JB, and C Plomion. 2014. LPmerge: an R package for merging genetic maps by linear programming. Bioinformatics 30:1623-1624."
 )

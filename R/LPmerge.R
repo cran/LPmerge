@@ -1,8 +1,7 @@
-LPmerge <-
-function(Maps,max.interval=1:3,weights=NULL) {
+LPmerge <- function(Maps,max.interval=1:3,weights=NULL) {
 	n.maps <- length(Maps)	
 	if (n.maps < 2) {
-		print("Must have at least two maps.")
+		print("Error.  Must have at least two maps.")
         stop()
 	}
 	if (is.null(weights)) {weights <- rep(1,n.maps)}
@@ -11,12 +10,23 @@ function(Maps,max.interval=1:3,weights=NULL) {
 	map.names <- attributes(Maps)$names
 	if (is.null(map.names)) {map.names <- 1:n.maps}
 	
-	#sort and round maps
+	#sort and round maps and convert factors to characters
+	num.mark <- rep(NA,n.maps)
+	num.unique.mark <- rep(NA,n.maps)
 	for (i in 1:n.maps) {
 		map <- Maps[[i]]
 		map <- map[order(map[,2]),]
 		map[,2] <- round(map[,2],2)  #round to 0.01 cM
+		map[,1] <- as.character(map[,1])
+		num.unique.mark[i] <- length(unique(map[,1]))
+		num.mark[i] <- nrow(map)
 		Maps[[i]] <- map
+	}
+	errs <- which(num.unique.mark!=num.mark)
+	if (length(errs)>0) {
+		print("Error. Redundant markers present in following maps:")
+		print(paste(map.names[errs],collapse=" "))
+		stop()
 	}
 	
 	map <- Maps[[1]]
@@ -235,7 +245,7 @@ function(Maps,max.interval=1:3,weights=NULL) {
 		if (ans$status != 0) {
 		stop("Error in LP solver.")	
 		} else {
-		map <- data.frame(marker=markers,position=ans$solution[match(mark.bins,bins)])
+		map <- data.frame(marker=markers,position=ans$solution[match(mark.bins,bins)],stringsAsFactors=F)
 		composite.map <- map[order(map$position),]
 		row.names(composite.map) <- NULL
 
@@ -251,7 +261,7 @@ function(Maps,max.interval=1:3,weights=NULL) {
 		RMSE <- apply(link.maps,2,function(x){sqrt(mean((composite.map$position-x)^2,na.rm=TRUE))})
 		print(data.frame(map=c(map.names,"mean","sd"),RMSE=round(c(RMSE,mean(RMSE),sd(RMSE)),2)))
 		colnames(link.maps) <- map.names
-		result[[p]] <- data.frame(marker=composite.map$marker,consensus=composite.map$position,link.maps)
+		result[[p]] <- data.frame(marker=composite.map$marker,consensus=composite.map$position,link.maps,stringsAsFactors=F)
 		}
 	}
 	return(result)

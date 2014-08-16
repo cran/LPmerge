@@ -34,7 +34,7 @@ One way to select the maximum interval size \eqn{K} is based on the principle of
 A list with length equal to the length of the max.interval parameter.  Each entry in the list is a data frame containing the consensus map and the component linkage maps.
 }
 \references{
-Endelman,J.B. and C. Plomion.  LPmerge: An R package for merging genetic maps by linear programming.
+Endelman, JB, and C Plomion. 2014. LPmerge: An R package for merging genetic maps by linear programming. Bioinformatics 30:1623-1624.
 }
 \examples{
 mapI <- data.frame(marker=c("A","B","C","D","E","F","G"),position=0:6) 
