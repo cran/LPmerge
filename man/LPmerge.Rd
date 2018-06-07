@@ -4,7 +4,7 @@
 Merging linkage maps by linear programming.
 }
 \description{
-LPmerge creates a consensus genetic map by merging linkage maps from different populations.  The software uses linear programming (LP) to efficiently minimize the mean absolute error between the consensus map and the linkage maps.  This minimization is performed subject to linear inequality constraints that ensure the ordering of the markers in the linkage maps is preserved.  When marker order is inconsistent between linkage maps, a minimum set of ordinal constraints is deleted to resolve the conflicts.
+This package creates a consensus genetic map by merging linkage maps from different populations.  The software uses linear programming (LP) to efficiently minimize the mean absolute error between the consensus map and the linkage maps.  This minimization is performed subject to linear inequality constraints that ensure the ordering of the markers in the linkage maps is preserved.  When marker order is inconsistent between linkage maps, a minimum set of ordinal constraints is deleted to resolve the conflicts.
 }
 \usage{
 LPmerge(Maps, max.interval = 1:3, weights = NULL)

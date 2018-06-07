@@ -16,7 +16,7 @@ LPmerge <- function(Maps,max.interval=1:3,weights=NULL) {
 	for (i in 1:n.maps) {
 		map <- Maps[[i]]
 		map <- map[order(map[,2]),]
-		map[,2] <- round(map[,2],2)  #round to 0.01 cM
+		map[,2] <- round(map[,2],3)  #round to 0.001 cM
 		map[,1] <- as.character(map[,1])
 		num.unique.mark[i] <- length(unique(map[,1]))
 		num.mark[i] <- nrow(map)
@@ -100,7 +100,7 @@ LPmerge <- function(Maps,max.interval=1:3,weights=NULL) {
 		v <- rep(0,n.bin)
 		v[constraints[i,2]] <- -1
 		v[constraints[i,3]] <- 1
-		A <- rBind(A,v)
+		A <- rbind(A,v)
 	}
 	
 	#######
@@ -109,7 +109,7 @@ LPmerge <- function(Maps,max.interval=1:3,weights=NULL) {
 		print("Finding maximum feasible subsystem.")
 		n.constraint <- nrow(A)
 		n.mark <- ncol(A)
-		B <- cBind(A,Diagonal(n.constraint))
+		B <- cbind(A,Diagonal(n.constraint))
 				
 		#Step1
 		f <- c(rep(0,n.mark),rep(1,ncol(B)-n.mark))
@@ -134,7 +134,7 @@ LPmerge <- function(Maps,max.interval=1:3,weights=NULL) {
 					min.SINF <- Inf
 					for (i in 1:length(candidates)) {
 						#delete constraint
-						B <- cBind(A[-c(eliminate,candidates[i]),],Diagonal(n.constraint - length(eliminate)-1))
+						B <- cbind(A[-c(eliminate,candidates[i]),],Diagonal(n.constraint - length(eliminate)-1))
 						constraint.id <- (1:n.constraint)[-c(eliminate,candidates[i])]
 						f <- c(rep(0,n.mark),rep(1,ncol(B)-n.mark))
 						ans <- Rglpk_solve_LP(f,B,rep(">=",nrow(B)),rep(1,nrow(B)))
@@ -221,7 +221,7 @@ LPmerge <- function(Maps,max.interval=1:3,weights=NULL) {
 			
 		print("Generating consensus map.")
 		N <- n.bin + n.error.terms
-		G <- cBind(A,Matrix(0,nrow=nrow(A),ncol=n.error.terms,sparse=TRUE))
+		G <- cbind(A,Matrix(0,nrow=nrow(A),ncol=n.error.terms,sparse=TRUE))
 	
 		b <- rep(0,nrow(G))
 		for (i in 1:n.error.terms) {
@@ -230,14 +230,14 @@ LPmerge <- function(Maps,max.interval=1:3,weights=NULL) {
 		v[error.terms[i,2]] <- 1
 		v[n.bin+i] <- 1
 		b <- c(b,error.terms[i,3])
-		G <- rBind(G,v)
+		G <- rbind(G,v)
 
 		v <- rep(0,N)
 		v[error.terms[i,1]] <- 1
 		v[error.terms[i,2]] <- -1
 		v[n.bin+i] <- 1
 		b <- c(b,-error.terms[i,3])
-		G <- rBind(G,v)
+		G <- rbind(G,v)
 	}
 	
 		f <- c(rep(0,n.bin),weights[error.terms[,4]]/n.terms[error.terms[,4]])  

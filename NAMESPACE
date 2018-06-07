@@ -1,2 +1,4 @@
 export(LPmerge)
 import(Matrix,Rglpk)
+importFrom("stats","sd")
+
